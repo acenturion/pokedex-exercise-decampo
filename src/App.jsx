@@ -43,13 +43,9 @@ function App() {
     return (
         <Container className={"container"}>
             <Title>Pokedex</Title>
-            {pokemon.length > 0 && (
-                <>
-                    <List items={pokemon}/>
-                    <Button onClick={handleOnLoadMore}>Load More</Button>
-                </>
-            )}
+            {pokemon.length > 0 && (<List items={pokemon}/>)}
             {loading && (<p>Pokedex is loading...</p>)}
+            {!loading && (<Button onClick={handleOnLoadMore}>Load More</Button>)}
         </Container>
     )
 }
