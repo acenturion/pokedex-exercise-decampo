@@ -1,5 +1,5 @@
-import adaptListPokemon from "./adapters/adaptListPokemon.js";
 import {LIMIT} from "./constants.js";
+import adaptInfoPokemon from "./adapters/adaptInfoPokemon.js";
 
 const URL = "https://pokeapi.co/api/v2/"
 
@@ -13,21 +13,21 @@ async function getPokemon(
         const data = await response.json();
         const results = data.results;
 
-        const pokemonArrayInfo = await Promise.all(results.map(pokemon => getPokemonData(pokemon)));
-
-        return await adaptListPokemon(pokemonArrayInfo);
+        const pokemonArrayInfo = await Promise.all(results.map(pokemon => getPokemonInfo(pokemon.name)));
+        return pokemonArrayInfo;
     } catch (error) {
         console.log("Error calling Api pokemon", error)
     }
 }
 
-/*Hago el fetch de cada pokemon especifico*/
-async function getPokemonData(pokemon) {
-    const result = await fetch(pokemon.url)
+/*Hago el fetch de cada pokemon especifico si quisiera mas informacion del pokemon lo agrego en el adapter*/
+async function getPokemonInfo(name) {
+    const result = await fetch(URL + "pokemon/" + name)
     const data = await result.json();
-    return await data;
+    return adaptInfoPokemon(data);
 }
 
 export {
     getPokemon,
+    getPokemonInfo
 }

@@ -7,6 +7,7 @@ export const pokemonSlice = createSlice({
         value: [],
         loading: true,
         offset: 0,
+        selected: {}
     },
     reducers: {
         load: (state, action) => {
@@ -19,6 +20,12 @@ export const pokemonSlice = createSlice({
         getNextPokemon: (state, action) => {
             state.value = [...state.value, ...action.payload];
             state.offset = state.offset + OFFSET_INCREMENT;
+        },
+        setSelectedData: (state, action) => {
+            state.selected = action.payload;
+        },
+        getPokemonData: (state, action) => {
+            state.selected = state.value.find(pokemon => pokemon.name === action.payload);
         }
     }
 })
@@ -27,9 +34,12 @@ export const {
     getNextPokemon,
     loadPokemon,
     load,
+    getPokemonData,
+    setSelectedData,
 } = pokemonSlice.actions;
 
-export const selectPokemon = state => state.pokemon.value
+export const selectListPokemon = state => state.pokemon.value
+export const selectPokemon = state => state.pokemon.selected
 export const selectOffset = state => state.pokemon.offset
 export const selectLoading = state => state.pokemon.loading
 

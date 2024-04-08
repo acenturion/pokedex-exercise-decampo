@@ -1,23 +1,22 @@
-import './App.css'
-import List from "./components/List.jsx";
-import Title from "./components/Title.jsx";
+import List from "../components/List.jsx";
+import Title from "../components/Title.jsx";
 import {useEffect} from "react";
-import {getPokemon} from "./service/PokemonApi.js";
-import Container from "./components/Container.jsx";
+import {getPokemon} from "../service/PokemonApi.js";
+import Container from "../components/Container.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {
     getNextPokemon, load,
     loadPokemon,
     selectLoading,
     selectOffset,
-    selectPokemon,
-} from "./store/slice/pokemonSlice.js";
-import Button from "./components/Button.jsx";
+    selectListPokemon,
+} from "../store/slice/pokemonSlice.js";
+import Button from "../components/Button.jsx";
 
 function App() {
     const dispatch = useDispatch()
 
-    const pokemon = useSelector(selectPokemon);
+    const pokemon = useSelector(selectListPokemon);
     const offset = useSelector(selectOffset);
     const loading = useSelector(selectLoading);
 
@@ -29,7 +28,9 @@ function App() {
             dispatch(load(false))
         }
 
-        loadPokemonData();
+        if (pokemon.length === 0) {
+            loadPokemonData();
+        }
     }, []);
 
     const handleOnLoadMore = async () => {
