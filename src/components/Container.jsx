@@ -7,7 +7,6 @@ const Container = styled.section`
     align-items: center;
     width: 100%;
     gap: 16px;
-    padding: 16px;
 `
 
 export default Container;
